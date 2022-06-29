@@ -12,12 +12,23 @@ spec:
      labels:
        app: api
     spec:
+      initContainers:
+        - name: migrations
+          image: migrations:lab2
+          imagePullPolicy: Never
+          command: ["prisma", "db", "push"]
+          env:
+            - name: DATABASE_URL
+              value: "postgres://user:pass@postgres-service:5432/lab"
       containers:
-        - image: api:lab1
+        - image: api:lab2
           imagePullPolicy: Never
           name: api
           ports:
             - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              value: "postgres://user:pass@postgres-service:5432/lab"
 
 ---
 
