@@ -9,7 +9,8 @@
 	guarantees are made. Don't use it to organise your life.)
 */
 
-const base = 'https://api.svelte.dev';
+// const base = 'http://localhost/api';
+const base = 'http://api-service/api';
 
 export function api(method, resource, data) {
 	return fetch(`${base}/${resource}`, {
