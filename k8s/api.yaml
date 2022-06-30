@@ -14,14 +14,14 @@ spec:
     spec:
       initContainers:
         - name: migrations
-          image: migrations:lab2
+          image: migrations:lab3
           imagePullPolicy: Never
           command: ["prisma", "db", "push"]
           env:
             - name: DATABASE_URL
               value: "postgres://user:pass@postgres-service:5432/lab"
       containers:
-        - image: api:lab2
+        - image: api:lab3
           imagePullPolicy: Never
           name: api
           ports:
@@ -29,6 +29,8 @@ spec:
           env:
             - name: DATABASE_URL
               value: "postgres://user:pass@postgres-service:5432/lab"
+            - name: RABBITMQ_URL
+              value: "amqp://rabbitmq-service:5672"
 
 ---
 
