@@ -1,10 +1,13 @@
-import { Controller, Get, Header } from '@nestjs/common';
+import { Controller, Get, Header, Inject } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
-  @Header('Content-Type', 'application/json')
+  constructor(@Inject('MICROSERVICE') private readonly client: ClientProxy) { }
+  
   @Get('/health')
   health() {
+    this.client.send('log', {text: 'Request GET /api/health'}).subscribe();
     return { ok: true };
   }
 }
